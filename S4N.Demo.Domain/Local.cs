@@ -27,7 +27,7 @@ namespace S4N.Demo.Domain
             this.Propietario = propietario ?? throw new ArgumentNullException(nameof(propietario));
         }
 
-        public int DronesConRuta => this.Drones.Where<Dron>((Func<Dron, bool>)(dron => dron.Rutas.Count > 0)).Count<Dron>();
+        public int DronesConRuta => this.Drones.Where<Dron>((Func<Dron, bool>)(dron => dron.RutasPendientes > 0)).Count<Dron>();
 
         public bool CargarArchivos(string Ruta)
         {
@@ -37,6 +37,11 @@ namespace S4N.Demo.Domain
                 this.Drones.Where<Dron>((Func<Dron, bool>)(dron => dron.Id == dronId)).First<Dron>().Rutas = FileManager.Instance.LeerArchivo(archivo);
             }
             return true;
+        }
+
+        public List<Dron> GetDronesConCarga()
+        {
+            return Drones.Where(dron => dron.Rutas.Count > 0).ToList();
         }
     }
 }

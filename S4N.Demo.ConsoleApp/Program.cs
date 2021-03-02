@@ -16,6 +16,8 @@ namespace S4N.Demo.ConsoleApp
             InicializandoMundo();
             CargarArchivos();
             ImprimirMundo();
+            HacerEntregas();
+            ImprimirMundo();
         }
 
         private static void InicializandoMundo()
@@ -44,8 +46,18 @@ namespace S4N.Demo.ConsoleApp
 
         private static void CargarArchivos() => Mundo.Local.CargarArchivos(Program.Ruta);
 
+        private static void HacerEntregas()
+        {
+            var dronesConRutas = Mundo.Local.GetDronesConCarga();
+
+            foreach (var dron in dronesConRutas)
+            {
+                dron.RealizarEntregas();
+            }
+        }
         private static void ImprimirMundo()
         {
+            System.Console.WriteLine("-----------------------------");
             Console.WriteLine("Local: " + Mundo.Local.Nombre);
             Console.WriteLine("Propietario: " + Mundo.Local.Propietario.Nombre);
             Console.WriteLine(string.Format("Número de Drone: {0}", Mundo.Local.Drones.Count));
