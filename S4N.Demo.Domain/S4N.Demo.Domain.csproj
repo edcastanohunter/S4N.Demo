@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\S4N.Demo.SharedKernel\S4N.Demo.SharedKernel.csproj" />
+    <ProjectReference Include="..\S4N.Demo.Utilities\S4N.Demo.Utilities.csproj" />
+  </ItemGroup>
+
+</Project>
