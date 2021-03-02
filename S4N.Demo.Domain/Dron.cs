@@ -22,42 +22,52 @@ namespace S4N.Demo.Domain
 
         public List<string> Rutas { get; set; } = new List<string>();
 
-        public int RutaActual => this._RutaActual;
+        public int RutaActual => _RutaActual;
+        public int RutasPendientes => Rutas.Count - RutaActual;
 
-        public bool ValidarRuta()
+        public void RealizarEntregas()
         {
-            bool valida = false;
-            if(RutaActual < Rutas.Count)
+            var len = Rutas.Count;
+            while (RutaActual < len)
             {
-                var ruta = Rutas[RutaActual];
-                var len = ruta.Length;
+                HacerRuta();
+            }
+        }
 
-                for (int i = 0; i < len; i++)
+        public void HacerRuta()
+        {
+            //bool valida = false;
+
+            var ruta = Rutas[RutaActual].ToCharArray();
+            var len = ruta.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                var movStr = ruta[i];
+                if (Enum.IsDefined(typeof(Movimiento), (int)movStr))
                 {
-                    var movStr = ruta[i];
-                    if (Enum.IsDefined(typeof(Movimiento), movStr))
-                    {
-                        var movimiento = (Movimiento)movStr;
+                    var movimiento = (Movimiento)movStr;
 
-                        switch (movimiento)
-                        {
-                            case Movimiento.Adelante:
-                                MoverAdelante();
-                                break;
-                            case Movimiento.Derecha:
-                                MoverDerecha();
-                                break;
-                            case Movimiento.Izquierda:
-                                MoverIzquierda();
-                                break;
-                            default:
-                                break;
-                        }
+                    switch (movimiento)
+                    {
+                        case Movimiento.Adelante:
+                            MoverAdelante();
+                            break;
+                        case Movimiento.Derecha:
+                            MoverDerecha();
+                            break;
+                        case Movimiento.Izquierda:
+                            MoverIzquierda();
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
+            //valida = true;
+            _RutaActual++;
+
             ReportarEntrega();
-            return valida;
         }
 
         private void ReportarEntrega()
